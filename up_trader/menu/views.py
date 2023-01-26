@@ -20,3 +20,6 @@ def show_level_two(request, lvl_1, lvl_2):
 
 def get_product(request, lvl_1, lvl_2, lvl_3):
     return HttpResponse(f'Отображение продукта с именем {lvl_3}')
+
+
+

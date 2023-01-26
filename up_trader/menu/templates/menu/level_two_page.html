@@ -1,0 +1,38 @@
+{% load menu_tags %}
+
+{% get_menu as menu %}
+{% get_lvl_one as lvl_one %}
+{% get_lvl_two as lvl_two %}
+
+{{ selected_one.title }}
+
+
+{% for m in menu %}
+    {% if m.title|stringformat:"s" == selected_menu.title|stringformat:"s" %}
+        {% with id_var=m.id %}
+            {% for mm in menu %}
+                {% if mm.id <= id_var|add:1 %}
+                <div>{{ mm.title }}</div>
+                {% for set in lvl_one %}
+                    {% if set.parent|stringformat:"s" == mm.title|stringformat:"s" %}
+                        <li>{{ set.title }}</li>
+                        <ul>
+
+                            {% for prod in lvl_two %}
+                                {% if prod.parent|stringformat:"s" == set.title|stringformat:"s" %}
+                                {% if prod.parent|stringformat:"s" == selected_one %}
+                                <a href="{% url 'product_page' mm.title set.title prod.title %}">{{ prod.title }}</a>
+                                {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+            <div>{{ mm.title }}</div>
+            {% endif %}
+            {% endfor %}
+        {% endwith %}
+    {% endif %}
+
+{% endfor %}

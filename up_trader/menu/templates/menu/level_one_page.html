@@ -1,0 +1,27 @@
+{% load menu_tags %}
+{% get_menu as menu %}
+{% get_lvl_one as lvl_one %}
+    {% for m in menu %}
+        {% if m.title|stringformat:"s" == selected_menu.title|stringformat:"s" %}
+            {% with id_var=m.id %}
+                {% for mm in menu %}
+<!-- В этом условии надо сделать третий уровень вложенности -->
+                {% if mm.id <= id_var|add:1 %}
+                    <div>{{ mm.title }}</div>
+                    {% for set in lvl_one %}
+                        {% if set.parent|stringformat:"s" == mm.title|stringformat:"s" %}<li><a href="{% url 'level_two' mm.title set.title %}">{{ set.title }}</a></li> {% endif %}
+                    {% endfor %}
+<!-- ID выбранного элемента ==  -->
+<!-- И в этом условии надо сделать третий уровень вложенности (Возможно оно не надо) -->
+
+<!-- В этом условии надо сделать третий уровень вложенности -->
+<!--Тут не надо -->
+                {% else %}
+                    <div>{{ mm.title }}</div>
+                {% endif %}
+                {% endfor %}
+            {% endwith %}
+        {% endif %}
+    {% endfor %}
+
+

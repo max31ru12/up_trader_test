@@ -1,0 +1,24 @@
+{% load static %}
+
+<!--<!DOCTYPE html>-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="styleshhet" href="{% static 'menu/css/style.css' %}"/>
+    <style>
+        * {
+        margin: 0;
+        padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <header></header>
+    <main>
+        {% block menu %}
+        {% endblock %}
+    </main>
+    <footer></footer>
+</body>
+</html>

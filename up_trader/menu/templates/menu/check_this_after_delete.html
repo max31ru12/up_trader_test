@@ -1,0 +1,60 @@
+{% block menu %}
+    {% for cat in category %}
+        <div>
+<!--{% url 'category_name' cat.title %} category_name - это name из urls.py -> path -->
+<!--  cat.title - передал из вьюшки таблицу Menu, cat.title идет в функцию show_categories в переменную cat_name  -->
+<!--  затем переменная cat_name идет в menu/urls.py <str:cat_name>/ -->
+            <a class="category-link" href="{% url 'category_name' cat.title %}">{{ cat.title }}</a>
+            <ul>
+        {% for podcat in menu %}
+<!--|stringformat:"s" - помогает сравнить строковые значения, полученные из БД -->
+            {% if podcat.parent|stringformat:"s" == cat.title|stringformat:"s" %}
+                <li><a href="">{{ podcat.title }}</a></li>
+            {% endif %}
+        {% endfor %}
+                <ul>
+        </div>
+    {% endfor %}
+
+<!--{% for catg in category %}-->
+<!--    <a href="{% url 'category_name' catg.id %}">Бля</a>-->
+<!--{% endfor %}-->
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+{% block menu %}
+
+   {% for m in menu %}
+        {% if m.title|stringformat:"s" == menu_position|stringformat:"s" %}
+            {% with my_var=m.id %}
+            {% for mm in menu %}
+            <!-- |add:1 - добавляет число к переменной my_var -->
+            {% if mm.id <= my_var|add:1  %}
+                <div>{{ mm.title }}</div>
+                {% for set in level_one %}
+                {% if set.parent|stringformat:"s" == mm.title|stringformat:"s" %}<li><a href="{% url 'level_two' %}">{{ set.title }}</a></li> {% endif %}
+                {% endfor %}
+            {% elif mm.id == my_var|add:1 %}
+                <div>{{ mm.title }}</div>
+                {% for set in level_one %}
+                {% if set.parent|stringformat:"s" == mm.title|stringformat:"s" %}<li><a href="{% url 'level_two' %}">{{ set.title }}</a></li> {% endif %}
+                {% endfor %}
+            {% else %}
+                <div>{{ mm.title }}</div>
+            {% endif %}
+            {% endfor %}
+            {% endwith %}
+        {% endif %}
+    {% endfor %}
+
+
+
+{% endblock %}

@@ -1,0 +1,8 @@
+{% load menu_tags %}
+{% get_menu as menu %}
+
+
+{% for m in menu %}
+    <div><a href="{% url 'level_one' m.title %}">{{ m.title }}</a></div>
+{% endfor %}
+
